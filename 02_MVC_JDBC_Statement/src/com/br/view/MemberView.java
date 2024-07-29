@@ -1,8 +1,10 @@
 package com.br.view;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.br.controller.MemberController;
+import com.br.model.vo.Member;
 
 /*
  * View
@@ -76,6 +78,20 @@ public class MemberView {
 	 */
 	public void displayNoData(String message) {
 		System.out.println("\n" + message);
+	}
+	
+	/**
+	 * 조회서비스 요청처리 후 조회결과가 여러행일 경우 사용자가 보게될 응답화면
+	 * @param list  출력시킬 회원들 데이터
+	 */
+	public void displayMemberListData(List<Member> list) {
+		System.out.println("\n조회된 데이터는 다음과 같습니다.");
+		
+		//for(int i=0; i<list.size(); i++) {
+		for(Member m : list) {
+			System.out.println(m);
+		}
+		
 	}
 
 }

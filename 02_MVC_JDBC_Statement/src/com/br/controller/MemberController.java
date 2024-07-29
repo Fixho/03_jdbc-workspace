@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.br.model.dao.MemberDao;
 import com.br.model.vo.Member;
+import com.br.view.MemberView;
 
 /*
  * Controller
@@ -16,6 +17,13 @@ public class MemberController {
 	
 	public void selectMemberList() {
 		List<Member> list = new MemberDao().selectMemberList();
+		
+		if(list.isEmpty()) { // 비어있을 경우 => 조회결과 x
+			new MemberView().displayNoData("전체 조회 결과가 없습니다.");
+		}else {	// 그게 아닐 경우 => 조회결과 o
+			new MemberView().displayMemberListData(list);
+		}
+		
 	}
 
 	
