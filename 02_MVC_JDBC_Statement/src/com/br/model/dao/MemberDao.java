@@ -17,6 +17,10 @@ import com.br.model.vo.Member;
  */
 public class MemberDao {
 	
+	/**
+	 * 사용자가 요청한 회원 전체 조회를 처리해주는 메소드
+	 * @return 텅빈리스트 | 조회결과가 담긴 리스트
+	 */
 	public List<Member> selectMemberList() {
 		
 		// select문(여러행 조회) => ResultSet객체 => 각 행들은 Member객체 => 리스트에 쌓기
@@ -74,6 +78,11 @@ public class MemberDao {
 		
 	}
 	
+	/**
+	 * 사용자가 입력한 정보들을 추가시켜주는 메소드
+	 * @param m  사용자가 입력한 값들이 각 필드에 담겨잇는 Member객체
+	 * @return	 insert 후에 처리된 행 수 
+	 */
 	public int insertMember(Member m) {
 		
 		// insert문 => 처리된 행수 (int) => 트랜잭션 처리
@@ -131,6 +140,11 @@ public class MemberDao {
 		
 	}
 	
+	/**
+	 * 사용자가 입력한 아이디로 검색 요청 처리해주는 메소드
+	 * @param userId	사용자가 입력한 검색하고자 하는 회원 아이디
+	 * @return	null | 조회데이터가 담겨있는 Member객체
+	 */
 	public Member selectMemberByUserId(String userId) {
 		// select문(한행) => ResultSet객체 => Member객체
 		
@@ -180,6 +194,11 @@ public class MemberDao {
 		return m;		// null | 조회결과가담긴Member객체
 	}
 	
+	/**
+	 * 사용자가 입력한 이름으로 키워드 검색 요청 처리해주는 메소드
+	 * @param userName 검색하고자 하는 회원 이름
+	 * @return 텅빈리스트 | 조회 결과가 담긴 리스트
+	 */
 	public List<Member> selectMemberByUserName(String userName) {
 		// select문(여러행) => ResultSet객체 => 각 행 Member객체 => 리스트에 쌓기
 		
@@ -229,6 +248,11 @@ public class MemberDao {
 		
 	}
 	
+	/**
+	 * 사용자가 입력한 정보로 변경 요청 처리해주는 메소드
+	 * @param m	수정할 회원아이디, 수정할 정보가 담겨잇는 Member 객체
+	 * @return update 후 처리된 행수 
+	 */
 	public int updateMember(Member m) {
 		
 		// update문 => 처리된 행수(int) => 트랜잭션 처리
@@ -281,10 +305,48 @@ public class MemberDao {
 		
 	}
 	
+	/**
+	 * 사용자가 입력한 아이디값 전달 받아서 회원 탈퇴 시켜주는 메소드
+	 * @param userId  탈퇴시키고자하는 회원 아이디 
+	 * @return delete 후 처리된 행 수
+	 */
 	public int deleteMember(String userId) {
 		// delete 문 => 처리된 행수 => 트랜잭션 처리
 		
 		// DELETE FROM MEMBER WHERE USER_ID = 'XXXX'
+		
+		int result = 0;
+		Connection conn = null;
+		Statement stmt = null;
+		
+		String sql = "DELETE FROM MEMBER WHERE USER_ID = '" +userId + "'";
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "JDBC", "JDBC");
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(sql);
+			
+			if(result > 0) {
+				conn.commit();
+			}else {
+				conn.rollback();
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
 		
 	}
 	

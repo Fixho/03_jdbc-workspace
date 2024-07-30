@@ -93,6 +93,12 @@ public class MemberController {
 	
 	public void deleteMember(String userId) {
 		int result = new MemberDao().deleteMember(userId);
+		
+		if(result > 0) {
+			new MemberView().displaySuccess("성공적으로 탈퇴 처리 되었습니다.");
+		}else {
+			new MemberView().displayFail("탈퇴 처리에 실패했습니다.");
+		}
 	}
 	
 	
