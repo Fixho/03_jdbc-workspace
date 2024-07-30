@@ -37,10 +37,17 @@ public class MemberView {
 			switch(menu) {
 			case 1: mc.selectMemberList(); break;
 			case 2: inputMember(); break;
-			case 3:  break;
-			case 4:  break;
-			case 5:  break;
-			case 6:  break;
+			case 3: String userId = inputMemberId();
+					mc.selectMemberByUserId(userId);
+					break;
+			case 4: String userName = inputMemberName(); 
+					mc.selectMemberByUserName(userName);
+					break;
+			case 5: modifyMember(); break;
+			case 6: //String deleteUserId = inputMemberId(); 
+					//mc.deleteMember(deleteUserId);
+					mc.deleteMember(inputMemberId());
+					break;
 			case 0: System.out.println("이용해주셔서 감사합니다. 프로그램을 종료합니다."); return;
 			default: System.out.println("메뉴를 잘못 선택하셨습니다. 다시 선택해주세요.");
 			}
@@ -83,9 +90,36 @@ public class MemberView {
 		
 	}
 	
+	public String inputMemberId() {
+		System.out.print("\n회원 아이디 입력: ");
+		return sc.nextLine();
+	}
 	
+	public String inputMemberName() {
+		System.out.print("\n회원 이름(키워드) 입력: ");
+		return sc.nextLine();
+	}
 	
-	
+	public void modifyMember() {
+		
+		System.out.println("\n== 회원 정보 변경 ==");
+		
+		// 특정 회원의 비번, 이메일, 전화번호, 취미 수정 
+		
+		String userId = inputMemberId();  // 회원검색을 위한 아이디
+		
+		System.out.print("변경할 비번: ");
+		String userPwd = sc.nextLine();
+		System.out.print("변경할 이메일: ");
+		String email = sc.nextLine();
+		System.out.print("변경할 전화번호: ");
+		String phone = sc.nextLine();
+		System.out.print("변경할 취미: ");
+		String hobby = sc.nextLine();
+		
+		mc.updateMember(userId, userPwd, email, phone, hobby);
+		
+	}
 	
 	
 	
@@ -126,6 +160,15 @@ public class MemberView {
 			System.out.println(m);
 		}
 		
+	}
+	
+	/**
+	 * 조회서비스 요청처리 후 조회결과가 한행일 경우 사용자가 보게될 응답화면
+	 * @param m
+	 */
+	public void displayMemberData(Member m) {
+		System.out.println("\n조회된 데이터는 다음과 같습니다.\n");
+		System.out.println(m);		
 	}
 
 }
