@@ -22,6 +22,20 @@ public class Member {
 	
 	public Member() {}
 
+	// 회원가입시 활용되는 매개변수 생성자
+	public Member(String userId, String userPwd, String userName, String gender, int age, String email, String phone,
+			String hobby) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.gender = gender;
+		this.age = age;
+		this.email = email;
+		this.phone = phone;
+		this.hobby = hobby;
+	}
+
 	public Member(int userNo, String userId, String userPwd, String userName, String gender, int age, String email,
 			String phone, String hobby, Date registDate) {
 		super();

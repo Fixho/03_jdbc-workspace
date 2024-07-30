@@ -36,7 +36,7 @@ public class MemberView {
 			
 			switch(menu) {
 			case 1: mc.selectMemberList(); break;
-			case 2:  break;
+			case 2: inputMember(); break;
 			case 3:  break;
 			case 4:  break;
 			case 5:  break;
@@ -46,6 +46,40 @@ public class MemberView {
 			}
 			
 		}
+		
+	}
+	
+	public void inputMember() {
+		
+		System.out.println("\n=== 신규 회원 추가 ===");
+		
+		// 아이디 ~ 취미
+		System.out.print("아이디(필수): ");
+		String userId = sc.nextLine();
+		
+		System.out.print("비밀번호(필수): ");
+		String userPwd = sc.nextLine();
+		
+		System.out.print("이름(필수): ");
+		String userName = sc.nextLine();
+		
+		System.out.print("성별(M/F): ");
+		String gender = sc.nextLine().toUpperCase();
+		
+		System.out.print("나이(정수): ");
+		String age = sc.nextLine();    // "20"
+		
+		System.out.print("이메일: ");
+		String email = sc.nextLine();
+		
+		System.out.print("전화번호(-빼고 입력): ");
+		String phone = sc.nextLine();
+		
+		System.out.print("취미(,로 연이어서 작성): ");
+		String hobby = sc.nextLine();
+		
+		// 회원 추가 요청 == Controller 메소드 호출
+		mc.insertMember(userId, userPwd, userName, gender, age, email, phone, hobby);
 		
 	}
 	

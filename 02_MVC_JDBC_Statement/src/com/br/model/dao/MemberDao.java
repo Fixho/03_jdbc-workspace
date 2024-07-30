@@ -73,5 +73,42 @@ public class MemberDao {
 		return list; // 조회결과가없었을경우 텅빈리스트 | 조회결과가있었을경우 뭐라도담긴리스트
 		
 	}
+	
+	public void insertMember(Member m) {
+		
+		// insert문 => 처리된 행수 (int) => 트랜잭션 처리
+		
+		int result = 0;		// 처리된 결과(행수)를 받아줄 변수
+		Connection conn = null; // DB연결정보를 담는 객체
+		Statement stmt = null;	// "완성된 sql문(실제 값들이 채워진)" 전달해서 실행하는 객체
+		
+		// 실행할 sql문(완성형태 == 실제값들이 다 채워진)
+		// INSERT INTO MEMBER VALUES(SEQ_UNO.NEXTVAL, 'XXXX', 'XXXXX', 'XXX', 'X', XX, 'XXXX', 'XXXXX', 'XXXXX', SYSDATE);
+		String sql = "INSERT INTO MEMBER VALUES(SEQ_UNO.NEXTVAL, "
+							+ "'" + m.getUserId() 	+ "', "
+							+ "'" + m.getUserPwd()	+ "', "
+							+ "'" + m.getUserName() + "', "
+							+ "'" + m.getGender() 	+ "', "
+								  + m.getAge()		+  ", "
+							+ "'" + m.getEmail()	+ "', "
+							+ "'" + m.getPhone()	+ "', "
+							+ "'" + m.getHobby()	+ "', SYSDATE)";
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

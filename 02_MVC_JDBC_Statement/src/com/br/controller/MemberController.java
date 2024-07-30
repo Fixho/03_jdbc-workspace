@@ -26,7 +26,20 @@ public class MemberController {
 		
 	}
 
-	
+	public void insertMember(String userId, String userPwd, String userName
+						   , String gender, String age, String email
+						   , String phone, String hobby) {
+		
+		// 데이터 가공처리
+		// view로부터 전달받은 데이터들을 vo객체(Member)에 주섬주섬담아서
+		// dao로 통채로 전달하기 
+		
+		// 매개변수 생성자 이용
+		Member m = new Member(userId, userPwd, userName, gender, Integer.parseInt(age), email, phone, hobby);
+		
+		new MemberDao().insertMember(m);
+		
+	}
 	
 	
 	
