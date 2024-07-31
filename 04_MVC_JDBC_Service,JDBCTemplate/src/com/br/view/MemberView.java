@@ -83,7 +83,7 @@ public class MemberView {
 		String hobby = sc.nextLine();
 		
 		// 회원 추가 요청 == Controller 메소드 호출
-		//mc.insertMember(userId, userPwd, userName, gender, age, email, phone, hobby);
+		mc.insertMember(userId, userPwd, userName, gender, age, email, phone, hobby);
 		
 	}
 	

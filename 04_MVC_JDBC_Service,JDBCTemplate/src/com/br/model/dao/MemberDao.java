@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.br.common.JDBCTemplate;
+import static com.br.common.JDBCTemplate.*;
 import com.br.model.vo.Member;
 
 public class MemberDao {
@@ -44,13 +44,51 @@ public class MemberDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
+			/*JDBCTemplate.*/close(rset);
+			/*JDBCTemplate.*/close(pstmt);
 			//JDBCTemplate.close(conn); => Service에서 반납
 		}
 		
 		return list;
 		
 	}
+	
+	public int insertMember(Connection conn, Member m) {
+		// insert문 => 처리된행수(int) => 트랜잭션처리(Service에서 진행)
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = "INSERT INTO MEMBER VALUES(SEQ_UNO.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // 3)  , 미완성된sql문
+			
+			pstmt.setString(1, m.getUserId());
+			pstmt.setString(2, m.getUserPwd());
+			pstmt.setString(3, m.getUserName());
+			pstmt.setString(4, m.getGender());
+			pstmt.setInt(5, m.getAge());
+			pstmt.setString(6, m.getEmail());
+			pstmt.setString(7, m.getPhone());
+			pstmt.setString(8, m.getHobby());
+			
+			result = pstmt.executeUpdate(); // 4), 5)
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

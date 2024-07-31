@@ -62,9 +62,27 @@ public class JDBCTemplate {
 		}
 	}
 	
+	// commit 처리 
+	public static void commit(Connection conn) {
+		try {
+			if(conn != null && !conn.isClosed()) {
+				conn.commit();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
-	
-	
+	// rollback 처리
+	public static void rollback(Connection conn) {
+		try {
+			if(conn != null && !conn.isClosed()) {
+				conn.rollback();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 
