@@ -38,13 +38,13 @@ public class MemberView {
 			case 1: mc.selectMemberList(); break;
 			case 2: inputMember(); break;
 			case 3: String userId = inputMemberId();
-					//mc.selectMemberByUserId(userId);
+					mc.selectMemberByUserId(userId);
 					break;
 			case 4: String userName = inputMemberName(); 
-					//mc.selectMemberByUserName(userName);
+					mc.selectMemberByUserName(userName);
 					break;
 			case 5: modifyMember(); break;
-			case 6: //mc.deleteMember(inputMemberId()); break;
+			case 6: mc.deleteMember(inputMemberId()); break;
 			case 0: System.out.println("이용해주셔서 감사합니다. 프로그램을 종료합니다."); return;
 			default: System.out.println("메뉴를 잘못 선택하셨습니다. 다시 선택해주세요.");
 			}
@@ -114,7 +114,7 @@ public class MemberView {
 		System.out.print("변경할 취미: ");
 		String hobby = sc.nextLine();
 		
-		//mc.updateMember(userId, userPwd, email, phone, hobby);
+		mc.updateMember(userId, userPwd, email, phone, hobby);
 		
 	}
 	

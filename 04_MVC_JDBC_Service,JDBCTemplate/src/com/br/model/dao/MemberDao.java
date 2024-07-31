@@ -83,6 +83,135 @@ public class MemberDao {
 		return result;
 	}
 	
+	public Member selectMemberByUserId(Connection conn, String userId) {
+		// select문 (한행) => ResultSet객체 => Member객체
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = "SELECT * FROM MEMBER WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // 미완성된 sql문
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member( rset.getInt("user_no")
+							  , rset.getString("user_id")
+							  , rset.getString("user_pwd")
+							  , rset.getString("user_name")
+							  , rset.getString("gender")
+							  , rset.getInt("age")
+							  , rset.getString("email")
+							  , rset.getString("phone")
+							  , rset.getString("hobby")
+							  , rset.getDate("regist_Date") );
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+	}
+	
+	
+	// SELECT * FROM MEMBER WHERE USER_NAME LIKE '%' || ? || '%' 
+	public List<Member> selectMemberByUserName(Connection conn, String userName){
+		
+		// select문 => ResultSet => List<Member>
+		List<Member> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = "SELECT * FROM MEMBER WHERE USER_NAME LIKE '%' || ? || '%'";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userName);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Member( rset.getInt("user_no")
+								   , rset.getString("user_id")
+								   , rset.getString("user_pwd")
+								   , rset.getString("user_name")
+								   , rset.getString("gender")
+								   , rset.getInt("age")
+								   , rset.getString("email")
+								   , rset.getString("phone")
+								   , rset.getString("hobby")
+								   , rset.getDate("regist_date") ));	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	// UPDATE MEMBER SET USER_PWD=?, EMAIL=?, PHONE=?, HOBBY=? WHERE USER_ID=?
+	public int updateMember(Connection conn, Member m) {
+		// update문 => 처리된행수(int) 
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE MEMBER SET USER_PWD=?, EMAIL=?, PHONE=?, HOBBY=? WHERE USER_ID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // 미완성된 sql문
+			pstmt.setString(1, m.getUserPwd());
+			pstmt.setString(2, m.getEmail());
+			pstmt.setString(3, m.getPhone());
+			pstmt.setString(4, m.getHobby());
+			pstmt.setString(5, m.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	// DELETE FROM MEMBER WHERE USER_ID = ?
+	public int deleteMember(Connection conn, String userId) {
+		// delete문 => 처리된행수(int)
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = "DELETE FROM MEMBER WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // 미완성된 sql문
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	
 	
 	
 	

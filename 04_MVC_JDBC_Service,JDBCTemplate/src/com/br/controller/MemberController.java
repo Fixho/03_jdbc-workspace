@@ -32,4 +32,61 @@ public class MemberController {
 		}
 		
 	}
+	
+	public void selectMemberByUserId(String userId) {
+		Member m = new MemberService().selectMemberByUserId(userId);
+		
+		if(m == null) { // 조회결과 x
+			new MemberView().displayNoData(userId + "에 대한 검색 결과가 없습니다.");
+		}else { // 조회결과 o
+			new MemberView().displayMemberData(m);
+		}
+	}
+	
+	public void selectMemberByUserName(String userName) {
+		List<Member> list = new MemberService().selectMemberByUserName(userName);
+		
+		if(list.isEmpty()) {
+			new MemberView().displayNoData(userName + "에 대한 검색 결과가 없습니다.");
+		}else {
+			new MemberView().displayMemberListData(list);
+		}
+	}
+	
+	public void updateMember(String userId, String userPwd, String email, String phone, String hobby) {
+		
+		Member m = new Member();
+		m.setUserId(userId);
+		m.setUserPwd(userPwd);
+		m.setEmail(email);
+		m.setPhone(phone);
+		m.setHobby(hobby);
+		
+		int result = new MemberService().updateMember(m);
+		
+		if(result > 0) {
+			new MemberView().displaySuccess("성공적으로 회원 정보 변경 되었습니다.");
+		}else {
+			new MemberView().displayFail("회원 정보 변경에 실패했습니다.");
+		}
+		
+	}
+	
+	public void deleteMember(String userId) {
+		int result = new MemberService().deleteMember(userId);
+		
+		if(result > 0) {
+			new MemberView().displaySuccess("성공적으로 회원 탈퇴 되었습니다.");
+		}else {
+			new MemberView().displayFail("회원 탈퇴에 실패했습니다.");
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
