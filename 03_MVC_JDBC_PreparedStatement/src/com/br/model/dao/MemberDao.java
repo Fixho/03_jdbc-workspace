@@ -225,17 +225,26 @@ public class MemberDao {
 		List<Member> list = new ArrayList<>();  
 		
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		// SELECT * FROM MEMBER WHERE USER_NAME LIKE '%XX%'
-		String sql = "SELECT * FROM MEMBER WHERE USER_NAME LIKE '%" + userName + "%'";
+		//String sql = "SELECT * FROM MEMBER WHERE USER_NAME LIKE '%?%'"; // 1)
+		//String sql = "SELECT * FROM MEMBER WHERE USER_NAME LIKE '%' || ? || '%'"; // 2)
+		String sql = "SELECT * FROM MEMBER WHERE USER_NAME LIKE ?"; // 3)
+		
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "jdbc", "JDBC");
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(sql);
+			
+			pstmt = conn.prepareStatement(sql); // 미완성된 sql문
+			
+			//pstmt.setString(1, userName);   			// 1) '홍길동'   => LIKE '%'홍길동'%'   		=> x
+			//pstmt.setString(1, userName);   			// 2) '홍길동'   => LIKE '%' || '홍길동' || '%' => o
+			pstmt.setString(1, "%" + userName + "%");	// 3) '%홍길동%' => LIKE '%홍길동%'				=> o
+			
+			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
 				list.add(new Member(rset.getInt("user_no")
@@ -257,7 +266,7 @@ public class MemberDao {
 		} finally {
 			try {
 				rset.close();
-				stmt.close();
+				pstmt.close();
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
