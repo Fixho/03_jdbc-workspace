@@ -94,9 +94,19 @@ public class MemberService {
 		return loginUserName;
 	}
 	
+	public String selectOldMememberName() {
+		Connection conn = getConnection();
+		String oldMemName = new MemberDao().selectOldMemberName(conn);
+		close(conn);
+		return oldMemName;
+	}
 	
-	
-	
+	public int selectMemberCount() {
+		Connection conn = getConnection();
+		int count = new MemberDao().selectMemberCount(conn);
+		close(conn);
+		return count;
+	}
 	
 	
 	

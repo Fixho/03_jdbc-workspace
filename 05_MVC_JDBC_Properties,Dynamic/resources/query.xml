@@ -100,6 +100,18 @@
 		   AND USER_PWD = ?
 	</entry>
 	
+	<entry key="selectOldMemberName">
+		SELECT USER_NAME
+		  FROM MEMBER
+		 WHERE AGE = (SELECT MAX(AGE)
+		 				FROM MEMBER)			
+	</entry>
+	
+	<entry key="selectMemberCount">
+		SELECT COUNT(*) AS COUNT
+		  FROM MEMBER
+	</entry>
+	
 	
 	
 </properties>

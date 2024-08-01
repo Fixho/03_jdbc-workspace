@@ -100,8 +100,21 @@ public class MemberController {
 		
 	}
 	
+	public void selectOldMememberName() {
+		String oldMemName = new MemberService().selectOldMememberName();
+		
+		if(oldMemName != null) {
+			new MemberView().displaySuccess(oldMemName + "님 입니다.");
+		}else {
+			new MemberView().displayNoData("조회된 회원이 없습니다.");
+		}
+	}
 	
-	
+	public void selectMemberCount() {
+		int count = new MemberService().selectMemberCount();
+		
+		new MemberView().displaySuccess("전체 회원수는 " + count + "명 입니다.");
+	}
 	
 	
 	
