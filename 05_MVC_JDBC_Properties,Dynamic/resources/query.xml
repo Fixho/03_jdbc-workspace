@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="selectMemberList">
+		SELECT USER_NO
+			 , USER_ID
+			 , USER_PWD
+			 , USER_NAME
+			 , GENDER
+			 , AGE
+			 , EMAIL
+			 , PHONE
+			 , HOBBY
+			 , REGIST_DATE
+		  FROM MEMBER
+		 ORDER
+		    BY USER_NAME ASC
+	</entry>
+	
+	
+	<!-- XML파일에서의 주석 -->
+	<entry key="insertMember">
+		INSERT
+		  INTO MEMBER
+		  	   (
+		     	 USER_NO
+		       , USER_ID
+		       , USER_PWD
+		       , USER_NAME
+		       , GENDER
+		       , AGE
+		       , EMAIL
+		       , PHONE
+		       , HOBBY
+		       )
+		 VALUES
+		 	   (
+		 	     SEQ_UNO.NEXTVAL
+		 	   , ?
+		 	   , ?
+		 	   , ?
+		 	   , ?
+		 	   , ?
+		 	   , ?
+		 	   , ?
+		 	   , ?
+		 	   )
+	</entry>
+	
+	<entry key="selectMemberByUserId">
+		SELECT USER_NO
+			 , USER_ID
+			 , USER_PWD
+			 , USER_NAME
+			 , GENDER
+			 , AGE
+			 , EMAIL
+			 , PHONE
+			 , HOBBY
+			 , REGIST_DATE
+		  FROM MEMBER
+		 WHERE USER_ID = ?
+	</entry>
+	
+	<entry key="selectMemberByUserName">
+		SELECT USER_NO
+			 , USER_ID
+			 , USER_PWD
+			 , USER_NAME
+			 , GENDER
+			 , AGE
+			 , EMAIL
+			 , PHONE
+			 , HOBBY
+			 , REGIST_DATE
+		  FROM MEMBER
+		 WHERE USER_NAME LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="updateMember">
+		UPDATE MEMBER
+		   SET USER_PWD = ?
+		   	 , EMAIL = ?
+		   	 , PHONE = ?
+		   	 , HOBBY = ?
+		 WHERE USER_ID = ?
+	</entry>
+	
+	<entry key="deleteMember">
+		DELETE
+		  FROM MEMBER
+		 WHERE USER_ID = ?
+	</entry>
+	
+	<entry key="loginMember">
+		SELECT USER_NAME
+		  FROM MEMBER
+		 WHERE USER_ID = ?
+		   AND USER_PWD = ?
+	</entry>
+	
+	
+	
+</properties>
