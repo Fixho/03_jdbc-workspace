@@ -1,6 +1,8 @@
 package com.br.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.br.model.service.MemberService;
 import com.br.model.vo.Member;
@@ -82,6 +84,21 @@ public class MemberController {
 		}
 	}
 	
+	public void loginMember(String userId, String userPwd) {
+		
+		Map<String, String> map = new HashMap<>(); // { key:value , key:value }
+		map.put("userId", userId); // {"userId":"user01"}
+		map.put("userPwd", userPwd); // {"userId":"user01", "userPwd":"pass01"}
+		
+		String loginUserName = new MemberService().loginMember(map);
+		
+		if(loginUserName == null) {
+			new MemberView().displayFail("로그인 실패");
+		}else {
+			new MemberView().displaySuccess(loginUserName + "님 환영합니다.");
+		}
+		
+	}
 	
 	
 	

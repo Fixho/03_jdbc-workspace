@@ -1,13 +1,15 @@
 package com.br.model.dao;
 
+import static com.br.common.JDBCTemplate.close;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import static com.br.common.JDBCTemplate.*;
 import com.br.model.vo.Member;
 
 public class MemberDao {
@@ -210,7 +212,38 @@ public class MemberDao {
 		
 	}
 	
-	
+	public String loginMember(Connection conn, Map<String, String> map) {
+		// SELECT USER_NAME FROM MEMBER WHERE USER_ID = ? AND USER_PWD = ? 
+		// select문(한행, 하나의문자열) => ResultSet 객체 => String 
+		
+		String loginUserName = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = "SELECT USER_NAME FROM MEMBER WHERE USER_ID = ? AND USER_PWD = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // 미완성된 sql문
+			pstmt.setString(1, map.get("userId"));
+			pstmt.setString(2, map.get("userPwd"));
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				loginUserName = rset.getString("user_name");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return loginUserName;
+		
+	}
 	
 	
 	

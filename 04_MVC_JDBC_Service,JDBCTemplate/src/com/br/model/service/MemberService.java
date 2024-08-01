@@ -1,12 +1,14 @@
 package com.br.model.service;
 
+import static com.br.common.JDBCTemplate.close;
+import static com.br.common.JDBCTemplate.commit;
+import static com.br.common.JDBCTemplate.getConnection;
+import static com.br.common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
-import static com.br.common.JDBCTemplate.*;
-
-import com.br.common.JDBCTemplate;
 import com.br.model.dao.MemberDao;
 import com.br.model.vo.Member;
 
@@ -85,7 +87,12 @@ public class MemberService {
 		
 	}
 	
-	
+	public String loginMember(Map<String, String> map) {
+		Connection conn = getConnection();
+		String loginUserName = new MemberDao().loginMember(conn, map);
+		close(conn);
+		return loginUserName;
+	}
 	
 	
 	

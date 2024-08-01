@@ -29,6 +29,7 @@ public class MemberView {
 			System.out.println("4. 회원 이름 키워드 검색");
 			System.out.println("5. 회원 정보 변경");
 			System.out.println("6. 회원 탈퇴");
+			System.out.println("7. 로그인");
 			System.out.println("0. 프로그램 종료");
 			System.out.print(">> 메뉴선택: ");
 			int menu = sc.nextInt();
@@ -45,6 +46,7 @@ public class MemberView {
 					break;
 			case 5: modifyMember(); break;
 			case 6: mc.deleteMember(inputMemberId()); break;
+			case 7: loginMember(); break;
 			case 0: System.out.println("이용해주셔서 감사합니다. 프로그램을 종료합니다."); return;
 			default: System.out.println("메뉴를 잘못 선택하셨습니다. 다시 선택해주세요.");
 			}
@@ -52,6 +54,18 @@ public class MemberView {
 		}
 		
 	}
+	
+	public void loginMember() {
+		System.out.println("\n=== 로그인 화면 ===");
+		System.out.print("아이디: ");
+		String userId = sc.nextLine();
+		System.out.print("비밀번호: ");
+		String userPwd = sc.nextLine();
+		
+		mc.loginMember(userId, userPwd);
+		
+	}
+	
 	
 	public void inputMember() {
 		
