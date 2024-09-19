@@ -1,7 +1,7 @@
 package com.br.model.dao;
 
 import static com.br.common.JDBCTemplate.close;
-
+import com.br.model.vo.Member;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import com.br.model.vo.Member;
 
 public class MemberDao {
 	

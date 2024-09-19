@@ -115,3 +115,4 @@ buildNumber.properties
 .classpath
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,maven
+05_MVC_JDBC_Properties,Dynamic/src/com/br/model/dao/MemberDao.java
